@@ -6,15 +6,12 @@ window.Journal = {
 
   initialize: function() {
     var posts = new Journal.Collections.Posts;
-    var indexView = new Journal.Views.PostsIndexView({collection: posts});
-    $("body").html(indexView.render().$el);
     posts.fetch();
-    // posts.fetch({
-//       success: function(collection){
-//         var indexView = new Journal.Views.PostsIndexView({collection: posts});
-//         $("body").html(indexView.render().$el);
-//       }
-//     });
+    // var indexView = new Journal.Views.PostsIndexView({collection: posts});
+    // $("body").html(indexView.render().$el);
+    // posts.fetch();
+    new Journal.Routers.Posts({ $rootEl: $("body"), collection: posts });
+    Backbone.history.start();
   }
 };
 
@@ -23,9 +20,3 @@ $(function(){
   Journal.initialize();
 
 });
-
-
-// $(document).ready(function(){
-//
-//   Journal.initialize();
-// });

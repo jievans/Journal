@@ -15,7 +15,7 @@ Journal.Views.PostsIndexView = Backbone.View.extend({
   },
 
   render: function(){
-    var ul = $("<ul></ul>");
+    var ul = $("<ul>");
 
     // collection = this.collection;
  //
@@ -25,11 +25,12 @@ Journal.Views.PostsIndexView = Backbone.View.extend({
  //      }
  //    });
     this.collection.each(function (post){
-      ul.append($("<li></li>").text(post.attributes.title));
-
+      ul.append($("<li>").text(post.attributes.title));
+      $show = $("<a>").attr("href", "#/posts/" + post.attributes.id).html("Show");
       ul.append($("<button>").html("Delete")
                              .attr("data-id", post.attributes.id)
                              .addClass("delete"));
+      ul.append($show);
     });
 
     this.$el.html(ul);
