@@ -1,7 +1,7 @@
 Journal.Views.PostEditView = Backbone.View.extend({
 
   events: {
-    "submit":"edit"
+    "submit":"submit"
   },
 
   initialize: function(options){
@@ -16,7 +16,7 @@ Journal.Views.PostEditView = Backbone.View.extend({
     return this;
   },
 
-  edit: function(event){
+  submit: function(event){
     console.log("In the create");
     event.preventDefault();
     var attributes = $(event.currentTarget).find("form").serializeJSON();
@@ -26,18 +26,26 @@ Journal.Views.PostEditView = Backbone.View.extend({
 
     var that = this;
     this.model.set(attributes);
-    this.model.save(null, {
-      success: function(){
-        console.log("Inside success!");
-        Backbone.history.navigate("#/");
-      },
-      error: function(model, response){
-        console.log("Inside error!");
-        console.log(response);
-        that.attributes = attributes;
-        that.render();
-      }
-    });
+    if(this.model.isNew()){
+      this.collection.create(this.model.attributes,
+                            {success: function(){
+                              Backbone.history.navigate("#/")}
+                            });
+    } else{
+      this.model.save(null, {
+        success: function(){
+          console.log("Inside success!");
+          Backbone.history.navigate("#/");
+        },
+        error: function(model, response){
+          console.log("Inside error!");
+          console.log(response);
+          that.attributes = attributes;
+          that.render();
+        }
+      });
+    }
+
 
   }
 });
