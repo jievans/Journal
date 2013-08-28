@@ -16,28 +16,28 @@ Journal.Routers.Posts = Backbone.Router.extend({
     // var posts = new Journal.Collections.Posts;
     var posts = this.collection;
     var indexView = new Journal.Views.PostsIndexView({collection: posts});
-    this.$rootEl.html(indexView.render().$el);
+    this.$rootEl.find("#sidebar").html(indexView.render().$el);
     posts.fetch();
   },
 
   show: function(id){
     var model = this.collection.get(id);
     var showView = new Journal.Views.PostShowView({model: model});
-    this.$rootEl.html(showView.render().$el);
+    this.$rootEl.find("#content").html(showView.render().$el);
   },
 
   edit: function(id){
     var model = this.collection.get(id);
     var editView = new Journal.Views.PostEditView({model: model,
                                                   collection: this.collection});
-    this.$rootEl.html(editView.render().$el);
+    this.$rootEl.find("#content").html(editView.render().$el);
   },
 
   new: function(){
     var model = new Journal.Models.Post;
     var editView = new Journal.Views.PostEditView({model: model,
                                                   collection: this.collection});
-    this.$rootEl.html(editView.render().$el);
+    this.$rootEl.find("#content").html(editView.render().$el);
   }
 
 
